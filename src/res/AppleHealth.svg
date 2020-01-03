@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800px" height="500px" viewBox="0 0 800 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.3 (7891) - http://www.bohemiancoding.com/sketch -->
+    <title>Other</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="1.11022302e-14%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FF5EA9" offset="0%"></stop>
+            <stop stop-color="#FF2314" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Other" sketch:type="MSArtboardGroup">
+            <g id="Health-Icon" sketch:type="MSLayerGroup" transform="translate(200.000000, 50.000000)">
+                <rect id="Icon-Frame" stroke="#DFDFDF" stroke-width="4" fill="#FFFFFF" sketch:type="MSShapeGroup" x="0" y="0" width="400" height="400" rx="90"></rect>
+                <path d="M246.117829,232.917591 C260.113755,232.867839 341.020074,178.329358 340.944766,120.060165 C340.905326,89.5435232 316.256179,64.8924057 285.889356,65.0003532 C270.140177,65.0563381 255.946129,71.7609765 245.935821,82.4598983 C235.895901,71.8429511 221.674468,65.2286233 205.912632,65.2846532 C175.545809,65.3926007 150.960607,90.2187358 151.000047,120.735378 C151.075355,179.00457 232.121902,232.967344 246.117829,232.917591 Z" id="Heart" fill="url(#linearGradient-1)" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang=en>
+<head>
+  <meta charset=utf-8>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="This site allows you to convert the export.xml from Apple's Health app to an easy to use and universal comma-separated file">
+  <title>Apple Health XML to CSV Converter - ericwolter.com</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="main.css">
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+</head>
+<body>
+  <!-- <div id="message" style="">
+    Hello, this is Eric the creator of the site. You appear to be blocking ads, that's totally fine!<br>Maybe you want to <a href="//ericwolter.com/projects/molicula.html">check out my iOS game <strong>molicula</strong></a>?
+  </div> -->
+  <div id="content" role="main">
+    <svg id="heart" baseProfile="basic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189.9448242 167.9176178"><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="-308.164" y1="374.749" x2="-308.164" y2="373.749" gradientTransform="matrix(189.94482 0 0 -167.91763 58629.215 62926.957)"><stop offset="0" stop-color="#ee62a3"/><stop offset="1" stop-color="#ed3327"/></linearGradient><path fill="url(#a)" d="M95.118 167.918c13.996-.05 94.902-54.59 94.827-112.858-.04-30.516-24.69-55.168-55.056-55.06-15.75.056-29.944 6.76-39.954 17.46C84.896 6.843 70.674.23 54.913.285 24.546.393-.04 25.22 0 55.735c.075 58.27 81.122 112.232 95.118 112.183z"/></svg>
+    <h1>Apple Health XML to CSV Converter</h1>
+    <div id="dropzone">
+    </div>
+    <input type="file" id="input" accept=".xml" style="display:none">
+    <div id="disclaimer">All work is done locally by your browser. Nothing is uploaded to my server.<a class="asterik" href="#details">*</a></div>
+    <div id="contact">Feel free to <a href="http://www.google.com/recaptcha/mailhide/d?k=01znhN9NW9uZa__ZuSO1H3Rg==&amp;c=rgI-a-VTZfBFJsw57m7t1M9RHBATNqVHGbaDz2np9nU=" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501znhN9NW9uZa__ZuSO1H3Rg\75\75\46c\75rgI-a-VTZfBFJsw57m7t1M9RHBATNqVHGbaDz2np9nU\075', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">contact me</a>  if you have any questions!
+    </div>
+    <div class="ad">
+      <ins class="adsbygoogle"
+           style="display:block;"
+           data-ad-client="ca-pub-5717136270400903"
+           data-ad-slot="6661853508"
+           data-ad-format="auto"></ins>
+    </div>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <table id="results-table">
+      <tbody>
+      </tbody>
+    </table>
+    <div id="technical-details">
+      <a class="asterik" name="details">*</a>I am using the <a href="">FileReader API</a> to read the contents of a local file. The XML file is then parsed and converted to CSV files in memory. Finally the CSV can be downloaded using the <a href="https://github.com/eligrey/FileSaver.js">FileSaver.js</a> library by <a href="http://eligrey.com/blog/">Eli Grey</a>.
+    </div>
+  </div>
+  <script src="filesaver.min.js"></script>
+  <script src="main.js"></script>
+  <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-42589062-1','auto');ga('send','pageview');
+  </script>
+</body>
+</html>

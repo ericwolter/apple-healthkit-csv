@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang=en>
+<head>
+  <meta charset=utf-8>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="This site allows you to convert the export.xml from Apple's Health app to an easy to use and universal comma-separated file">
+  <title>Apple Health XML to CSV Converter - ericwolter.com</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+  margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template {
+  display: none;
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+
+pre {
+  overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+
+button {
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+  line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+
+optgroup {
+  font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+</style>
+  <style>html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+@font-face {
+  font-family: 'icons';
+  src:url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAAT0AAsAAAAABKgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgCGL+9mNtYXAAAAFoAAAAVAAAAFQXVtKHZ2FzcAAAAbwAAAAIAAAACAAAABBnbHlmAAABxAAAAQQAAAEEi1d2U2hlYWQAAALIAAAANgAAADYFdevVaGhlYQAAAwAAAAAkAAAAJANiAeZobXR4AAADJAAAABQAAAAUBIAAAGxvY2EAAAM4AAAADAAAAAwAKACWbWF4cAAAA0QAAAAgAAAAIAAIAEpuYW1lAAADZAAAAW4AAAFu0YJtmXBvc3QAAATUAAAAIAAAACAAAwAAAAMBQAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA6QAB4P/gACAB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEADgAAAAKAAgAAgACAAEAIOkA//3//wAAAAAAIOkA//3//wAB/+MXBAADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAgAA/9UBgAHVACQARwAAJSIGDwERNCYjIgYVEScuASMiBhUUFh8BHgEzMjY/AT4BNTQmIzcjIgYVFBY7AREhETMyNjU0JisBIgYVERQWMyEyNjURNCYjAQkCAwE6BQQEBToBAwIEBQEBSgEDAgIDAUoBAQUEZXcEBQUEd/6kdwQFBQR3BwsLBwFcBwsLB+gCAToBIQQFBQT+3zoBAgYEAQQBSQECAgFJAQQBBAZbBQQEBf63AUkFBAQFCwf+twgLCwgBSQcLAAABAAAAAQAAKfjTT18PPPUACwIAAAAAANJrVZcAAAAA0mtVlwAA/9UBgAHVAAAACAACAAAAAAAAAAEAAAHg/+AAAAIAAAAAAAGAAAEAAAAAAAAAAAAAAAAAAAAFAgAAAAAAAAAAAAAAAQAAAAGAAAAAAAAAAAoAFAAeAIIAAQAAAAUASAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA4ArgABAAAAAAABAAUAAAABAAAAAAACAAcATgABAAAAAAADAAUAMAABAAAAAAAEAAUAYwABAAAAAAAFAAsADwABAAAAAAAGAAUAPwABAAAAAAAKABoAcgADAAEECQABAAoABQADAAEECQACAA4AVQADAAEECQADAAoANQADAAEECQAEAAoAaAADAAEECQAFABYAGgADAAEECQAGAAoARAADAAEECQAKADQAjGljb25zAGkAYwBvAG4Ac1ZlcnNpb24gMS4wAFYAZQByAHMAaQBvAG4AIAAxAC4AMGljb25zAGkAYwBvAG4Ac2ljb25zAGkAYwBvAG4Ac1JlZ3VsYXIAUgBlAGcAdQBsAGEAcmljb25zAGkAYwBvAG4Ac0ZvbnQgZ2VuZXJhdGVkIGJ5IEljb01vb24uAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-download:before {
+  content: "\e900";
+}
+
+#message {
+  display: none;
+  opacity: 0;
+  transition: opacity .5s linear;
+
+  position: fixed;
+  font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
+  font-weight: 300;
+  text-align: center;
+  color: #fff;
+  background: #f00;
+  font-size: 14px;
+  padding: 16px;
+  width: 100%;
+  z-index: 999;
+  background: #ff3b30;
+  background: linear-gradient(180, #ff3b30, #e60200);
+}
+
+#message a {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: underline;
+}
+#message.show {
+  display: block;
+}
+#message.open {
+  opacity: 0.9;
+}
+
+#content {
+  max-width: 960px;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 17px;
+  line-height: 21px;
+  font-family: 'Helvetica Neue', 'Segoe UI', sans-serif;
+  font-weight: 300;
+}
+@keyframes beat {
+    0% {transform: scale(1)}
+    50% {transform: scale(1.1)}
+    100% {transform: scale(1)}
+}
+#heart {
+  margin-top: 45px;
+  width: 100px;
+  animation: beat 2s ease 0s infinite normal;
+}
+h1 {
+  margin: 45px;
+  font-weight: lighter;
+  font-size: 45px;
+  line-height: 55px;
+}
+a {
+  color: #ff2d55;
+  border: 0;
+  background: 0;
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  cursor: pointer;
+}
+a:hover {
+  color: #f9cfd7;
+}
+a:active {
+  color: #f9cfd7;
+}
+#dropzone {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100px;
+  border: 2px solid #ff2d55;
+  border-radius: 7px;
+  color: #ff2d55;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 100px;
+}
+#disclaimer {
+  font-size: 11px;
+  margin: 13px -13px;
+  margin-bottom: 0;
+  color: #8e8e93;
+}
+#contact {
+  font-size: 11px;
+  margin: 13px -13px;
+  margin-top: 0;
+  color: #8e8e93;
+  text-decoration: none;
+}
+#contact a {
+  font-size: 11px;
+}
+table {
+  margin: 45px auto;
+  max-width: 600px;
+  width: 90%;
+  text-align: left;
+  font-size: 17px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+tr {
+  border: solid;
+  border-width: 1px 0;
+  border-color: #c8c7cc;
+}
+tr:first-child {
+  border-top: none;
+}
+tr:last-child {
+  border-bottom: none;
+}
+td {
+  padding: 16px;
+}
+td:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+td:last-child {
+  width: 50px;
+}
+#progress {
+  position: absolute;
+  bottom: -1px;
+  /*height: 98px;*/
+  height: 6px; /*98px*/
+  width: 0%;
+  background: #ff2d55;
+  /*border-radius: 5px;*/
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: width .1s;
+}
+.ad {
+  max-width: 600px;
+  margin: 0 auto;
+}
+#technical-details {
+  max-width: 600px;
+  margin: 0 auto;
+  border-top: 1px #c8c7cc solid;
+  font-size: 11px;
+  color: #8e8e93;
+  padding-top: 11px;
+}
+#technical-details a {
+  font-size: 11px;
+  text-decoration: none;
+}
+.asterik {
+  font-size: 11px;
+  color: #8e8e93;
+  text-decoration: none;
+}
+</style>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+</head>
+<body>
+  <!-- <div id="message" style="">
+    Hello, this is Eric the creator of the site. You appear to be blocking ads, that's totally fine!<br>Maybe you want to <a href="//ericwolter.com/projects/molicula.html">check out my iOS game <strong>molicula</strong></a>?
+  </div> -->
+  <div id="content" role="main">
+    <svg id="heart" baseProfile="basic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189.9448242 167.9176178"><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="-308.164" y1="374.749" x2="-308.164" y2="373.749" gradientTransform="matrix(189.94482 0 0 -167.91763 58629.215 62926.957)"><stop offset="0" stop-color="#ee62a3"/><stop offset="1" stop-color="#ed3327"/></linearGradient><path fill="url(#a)" d="M95.118 167.918c13.996-.05 94.902-54.59 94.827-112.858-.04-30.516-24.69-55.168-55.056-55.06-15.75.056-29.944 6.76-39.954 17.46C84.896 6.843 70.674.23 54.913.285 24.546.393-.04 25.22 0 55.735c.075 58.27 81.122 112.232 95.118 112.183z"/></svg>
+    <h1>Apple Health XML to CSV Converter</h1>
+    <div id="dropzone">
+    </div>
+    <input type="file" id="input" accept=".xml" style="display:none">
+    <div id="disclaimer">All work is done locally by your browser. Nothing is uploaded to my server.<a class="asterik" href="#details">*</a></div>
+    <div id="contact">Feel free to <a href="http://www.google.com/recaptcha/mailhide/d?k=01znhN9NW9uZa__ZuSO1H3Rg==&amp;c=rgI-a-VTZfBFJsw57m7t1M9RHBATNqVHGbaDz2np9nU=" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501znhN9NW9uZa__ZuSO1H3Rg\75\75\46c\75rgI-a-VTZfBFJsw57m7t1M9RHBATNqVHGbaDz2np9nU\075', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;">contact me</a>  if you have any questions!
+    </div>
+    <div class="ad">
+      <ins class="adsbygoogle"
+           style="display:block;"
+           data-ad-client="ca-pub-5717136270400903"
+           data-ad-slot="6661853508"
+           data-ad-format="auto"></ins>
+    </div>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <table id="results-table">
+      <tbody>
+      </tbody>
+    </table>
+    <div id="technical-details">
+      <a class="asterik" name="details">*</a>I am using the <a href="">FileReader API</a> to read the contents of a local file. The XML file is then parsed and converted to CSV files in memory. Finally the CSV can be downloaded using the <a href="https://github.com/eligrey/FileSaver.js">FileSaver.js</a> library by <a href="http://eligrey.com/blog/">Eli Grey</a>.
+    </div>
+  </div>
+  <script>/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+var saveAs=saveAs||function(e){"use strict";if(typeof navigator!=="undefined"&&/MSIE [1-9]\./.test(navigator.userAgent)){return}var t=e.document,n=function(){return e.URL||e.webkitURL||e},r=t.createElementNS("http://www.w3.org/1999/xhtml","a"),i="download"in r,o=function(e){var t=new MouseEvent("click");e.dispatchEvent(t)},a=/Version\/[\d\.]+.*Safari/.test(navigator.userAgent),f=e.webkitRequestFileSystem,u=e.requestFileSystem||f||e.mozRequestFileSystem,s=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},c="application/octet-stream",d=0,l=500,w=function(t){var r=function(){if(typeof t==="string"){n().revokeObjectURL(t)}else{t.remove()}};if(e.chrome){r()}else{setTimeout(r,l)}},p=function(e,t,n){t=[].concat(t);var r=t.length;while(r--){var i=e["on"+t[r]];if(typeof i==="function"){try{i.call(e,n||e)}catch(o){s(o)}}}},v=function(e){if(/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)){return new Blob(["\ufeff",e],{type:e.type})}return e},y=function(t,s,l){if(!l){t=v(t)}var y=this,m=t.type,S=false,h,R,O=function(){p(y,"writestart progress write writeend".split(" "))},g=function(){if(R&&a&&typeof FileReader!=="undefined"){var r=new FileReader;r.onloadend=function(){var e=r.result;R.location.href="data:attachment/file"+e.slice(e.search(/[,;]/));y.readyState=y.DONE;O()};r.readAsDataURL(t);y.readyState=y.INIT;return}if(S||!h){h=n().createObjectURL(t)}if(R){R.location.href=h}else{var i=e.open(h,"_blank");if(i==undefined&&a){e.location.href=h}}y.readyState=y.DONE;O();w(h)},b=function(e){return function(){if(y.readyState!==y.DONE){return e.apply(this,arguments)}}},E={create:true,exclusive:false},N;y.readyState=y.INIT;if(!s){s="download"}if(i){h=n().createObjectURL(t);r.href=h;r.download=s;setTimeout(function(){o(r);O();w(h);y.readyState=y.DONE});return}if(e.chrome&&m&&m!==c){N=t.slice||t.webkitSlice;t=N.call(t,0,t.size,c);S=true}if(f&&s!=="download"){s+=".download"}if(m===c||f){R=e}if(!u){g();return}d+=t.size;u(e.TEMPORARY,d,b(function(e){e.root.getDirectory("saved",E,b(function(e){var n=function(){e.getFile(s,E,b(function(e){e.createWriter(b(function(n){n.onwriteend=function(t){R.location.href=e.toURL();y.readyState=y.DONE;p(y,"writeend",t);w(e)};n.onerror=function(){var e=n.error;if(e.code!==e.ABORT_ERR){g()}};"writestart progress write abort".split(" ").forEach(function(e){n["on"+e]=y["on"+e]});n.write(t);y.abort=function(){n.abort();y.readyState=y.DONE};y.readyState=y.WRITING}),g)}),g)};e.getFile(s,{create:false},b(function(e){e.remove();n()}),b(function(e){if(e.code===e.NOT_FOUND_ERR){n()}else{g()}}))}),g)}),g)},m=y.prototype,S=function(e,t,n){return new y(e,t,n)};if(typeof navigator!=="undefined"&&navigator.msSaveOrOpenBlob){return function(e,t,n){if(!n){e=v(e)}return navigator.msSaveOrOpenBlob(e,t||"download")}}m.abort=function(){var e=this;e.readyState=e.DONE;p(e,"abort")};m.readyState=m.INIT=0;m.WRITING=1;m.DONE=2;m.error=m.onwritestart=m.onprogress=m.onwrite=m.onabort=m.onerror=m.onwriteend=null;return S}(typeof self!=="undefined"&&self||typeof window!=="undefined"&&window||this.content);if(typeof module!=="undefined"&&module.exports){module.exports.saveAs=saveAs}else if(typeof define!=="undefined"&&define!==null&&define.amd!=null){define([],function(){return saveAs})}
+</script>
+  <script>/*jslint indent: 2*/
+/*global FileReader, DOMParser, Blob, saveAs*/
+'use strict';
+var NEWLINE = '\n';
+var CSV_SEPARATOR = ',';
+var dropzone = document.getElementById('dropzone');
+var input = document.getElementById('input');
+var table = document.getElementById('results-table');
+var current_file;
+var parser = new DOMParser();
+
+var STAGE_START = 0;
+var STAGE_READING = 1;
+var STAGE_AGGREGATING = 2;
+var STAGE_GENERATING = 3;
+var STAGE_FINISHED = 4;
+var STAGE_TOTAL = 3;
+
+setProgress(0, 0);
+
+function setProgress(stage, percent) {
+  var percentage = percent;
+  percentage *= 100;
+  percentage = Math.round(percentage);
+
+  if(stage === STAGE_READING) {
+    dropzone.textContent = 'Running in circles... (' + percentage + '%)';
+  } else if (stage === STAGE_AGGREGATING) {
+    dropzone.textContent = 'Riding uphill... (' + percentage + '%)';
+  } else if (stage === STAGE_GENERATING) {
+    dropzone.textContent = 'Lifting weights... (' + percentage + '%)';
+  } else if (stage === STAGE_FINISHED) {
+    dropzone.textContent = 'Exhausted, catching a breath! (100%)';
+  } else {
+    dropzone.textContent = 'Select your export.xml, ready to go!';
+  }
+}
+
+function yieldingLoop(count, chunksize, callback, finished) {
+
+  var i = 0;
+  (function chunk() {
+    var end = Math.min(i + chunksize, count);
+    while (i < end) {
+      callback.call(null, i);
+      i += 1;
+    }
+    if (i < count) {
+      setTimeout(chunk, 0);
+    } else {
+      finished.call(null);
+    }
+  }());
+}
+
+function aggregateData(records, callback) {
+  var sheets = {},
+    a;
+  var progress_current = 0;
+  var progress_total = records.length;
+
+  yieldingLoop(records.length, 1000, function (r) {
+    var record = records[r], // one record in the xml
+      type, // the type of the record
+      sheet, // object containing the csv table
+      columns, // the columns of the csv table
+      rows, // the rows of the csv table
+      row, // the current row for the csv table
+      attribute; // the current attribute being added to the csv table
+
+    // find type attribute
+
+    if (record.attributes.type !== undefined) {
+      type = record.attributes.type.value;
+      if (type) {
+        if (sheets[type] === undefined) {
+          sheets[type] = {columns: [], rows: []};
+        }
+        sheet = sheets[type];
+        columns = sheet.columns;
+        rows = sheet.rows;
+        row = {};
+        for (a = 0; a < record.attributes.length; a += 1) {
+          attribute = record.attributes[a];
+          if (columns.indexOf(attribute.name) === -1) {
+            columns.push(attribute.name);
+          }
+          row[attribute.name] = attribute.value;
+          if(attribute.value.indexOf(',') > -1) {
+            CSV_SEPARATOR = ';'
+          }
+        }
+        rows.push(row);
+      } else {
+        console.error("invalid record type");
+      }
+    } else {
+      console.error("no type attribute");
+    }
+    progress_current += 1;
+    setProgress(STAGE_AGGREGATING, progress_current / progress_total);
+  }, function () {
+    callback(null, sheets);
+  });
+}
+
+function addFileLink(link_element, blob, filename) {
+  link_element.addEventListener('click', function (e) {
+    saveAs(blob, filename);
+    e.preventDefault();
+  });
+}
+
+function generateCSV(sheets, numRecords) {
+  var types = Object.keys(sheets), // the types from the xml
+    type, // the current type
+    sheet, // the sheet containing the data for the current type
+    col, // the current column
+    row, // the current row
+    csv, // the string containing the final csv
+    blob, // the blob of the csv used for saving a file
+    /* DOM elements */
+    table_body, // the tbody
+    table_row, // the tr
+    table_col, // the td
+    download_col, // the table column containing the download link
+    download_link, // the a
+    /* Iterators */
+    t, // the type iterator
+    r, // the row iterator
+    c; // the coluimn iterator
+
+  var progress_current = 0;
+  var progress_total = numRecords;
+
+  table_body = document.createElement('tbody');
+  table.replaceChild(table_body, table.firstElementChild);
+  yieldingLoop(types.length, 1, function (t) {
+    type = types[t];
+    csv = '';
+
+    sheet = sheets[type];
+    csv += sheet.columns.join(CSV_SEPARATOR) + NEWLINE;
+
+    for (r = 0; r < sheet.rows.length; r += 1) {
+      row = sheet.rows[r];
+      for (c = 0; c < sheet.columns.length; c += 1) {
+        col = sheet.columns[c];
+        if (row[col] !== undefined) {
+          csv += row[col];
+        }
+        if((c+1) < sheet.columns.length) { // last column
+          csv += CSV_SEPARATOR;
+        }
+      }
+      csv += NEWLINE;
+      progress_current += 1;
+      setProgress(STAGE_GENERATING, progress_current / progress_total);
+    }
+    blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+
+    table_row = document.createElement('tr');
+
+    table_col = document.createElement('td');
+    table_col.innerHTML = type;
+    table_row.appendChild(table_col);
+
+    download_col = document.createElement('td');
+    download_link = document.createElement('a');
+    download_link.className += ' icon-download';
+    addFileLink(download_link, blob, type + '.csv');
+
+    download_col.appendChild(download_link);
+    table_row.appendChild(download_col);
+
+    table_body.appendChild(table_row);
+  }, function() {
+    setProgress(STAGE_FINISHED, 1);
+  });
+}
+
+function extractRecords(line, records) {
+  var xml = parser.parseFromString(line, 'text/xml');
+  var recordNodes = xml.getElementsByTagName('Record');
+
+  for (var r = 0; r < recordNodes.length; r++) {
+    var recordNode = recordNodes[r];
+    var record = { attributes: [] };
+    records.push(record);
+
+    for (var a = 0; a < recordNode.attributes.length; a++) {
+      var attribNode = recordNode.attributes[a];
+      var attribute = {
+        name: attribNode.name.trim(),
+        value: attribNode.value.trim()
+      }
+      record.attributes.push(attribute);
+
+      if(attribute.name === 'type') {
+        record.attributes.type = attribute;
+      }
+
+    }
+
+    var metadataNodes = recordNode.getElementsByTagName('MetadataEntry');
+    for (var m = 0; m < metadataNodes.length; m++) {
+      var metadataNode = metadataNodes[m];
+
+      var attribute = {
+        name: metadataNode.getAttribute('key').trim(),
+        value: metadataNode.getAttribute('value').trim(),
+      }
+      record.attributes.push(attribute);
+    }
+  }
+}
+
+function readFileRecordByRecord(file, callback) {
+  var optimal_size = file.size / (32*1024*1024);
+  optimal_size = Math.min(optimal_size, 32*1024*1024); // max: 32MB
+  optimal_size = Math.max(optimal_size, 1*1024*1024); // min: 1MB
+  var CHUNK_SIZE = optimal_size;
+  var offset = 0;
+  var reader = new FileReader();
+  var remainingWindow = new Uint8Array();
+  var records = [];
+
+  current_file = file;
+  setProgress(STAGE_READING, 0);
+
+  function concatBuffer(buffer1, buffer2) {
+    var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
+    tmp.set(buffer1);
+    tmp.set(buffer2, buffer1.byteLength);
+    return tmp;
+  }
+
+  reader.onload = function(ev) {
+    var textWindow = concatBuffer(remainingWindow, new Uint8Array(ev.target.result));
+    var textOffset = 0;
+    for (var i = 0; i < textWindow.length; i++) {
+      var character = textWindow[i];
+      if(character === 0x0A || character === 0x0D) {
+        var lineStart = textOffset;
+        var lineEnd = i;
+        textOffset = i;
+        var lineSlice = textWindow.subarray(lineStart, lineEnd);
+        var line = Utf8ArrayToStr(lineSlice);
+        extractRecords(line, records);
+      }
+    }
+    remainingWindow = textWindow.subarray(textOffset);
+    setProgress(STAGE_READING, offset/file.size);
+    offset += CHUNK_SIZE;
+    seek();
+  }
+  reader.onerror = function(ev) {
+    console.log(ev, records);
+    callback('Error reading file "' + file + '" at offset: ' + offset);
+  }
+  seek();
+
+  function seek() {
+    if (offset >= file.size) {
+      setProgress(STAGE_READING, 1);
+      callback(null, records);
+      return;
+    }
+    var slice = file.slice(offset, offset + CHUNK_SIZE);
+    reader.readAsArrayBuffer(slice);
+  }
+
+}
+
+dropzone.addEventListener('click', function (e) {
+  input.click();
+  e.preventDefault();
+}, false);
+
+input.addEventListener('change', function () {
+  readFileRecordByRecord(this.files[0], function(err, records) {
+    if(err) {
+      console.error(err);
+      return;
+    }
+    aggregateData(records, function(err, sheets) {
+      if(err) {
+        console.error(err);
+        return;
+      }
+      generateCSV(sheets, records.length);
+    });
+  });
+}, false);
+
+function Utf8ArrayToStr(array) {
+  var out, i, len, c;
+  var char2, char3;
+
+  out = "";
+  len = array.length;
+  i = 0;
+  while(i < len) {
+    c = array[i++];
+    switch(c >> 4)
+    {
+      case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+        // 0xxxxxxx
+        out += String.fromCharCode(c);
+        break;
+      case 12: case 13:
+        // 110x xxxx   10xx xxxx
+        char2 = array[i++];
+        out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+        break;
+      case 14:
+        // 1110 xxxx  10xx xxxx  10xx xxxx
+        char2 = array[i++];
+        char3 = array[i++];
+        out += String.fromCharCode(((c & 0x0F) << 12) |
+                       ((char2 & 0x3F) << 6) |
+                       ((char3 & 0x3F) << 0));
+        break;
+    }
+  }
+
+  return out;
+}
+</script>
+  <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-42589062-1','auto');ga('send','pageview');
+  </script>
+</body>
+</html>
