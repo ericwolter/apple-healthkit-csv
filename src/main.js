@@ -1,5 +1,5 @@
 /*jslint indent: 2*/
-/*global FileReader, DOMParser, Blob, saveAs*/
+/*global FileReader, DOMParser, Blob*/
 'use strict';
 var NEWLINE = '\n';
 var CSV_SEPARATOR = ',';
@@ -112,14 +112,6 @@ function aggregateData(records, callback) {
   });
 }
 
-function addFileLink(link_element, blob, filename) {
-  link_element.addEventListener('click', function (e) {
-    const url = window.URL.createObjectURL(blob);
-    saveAs(url, filename);
-    e.preventDefault();
-  });
-}
-
 function generateCSV(sheets, numRecords) {
   var types = Object.keys(sheets), // the types from the xml
     type, // the current type
@@ -176,8 +168,10 @@ function generateCSV(sheets, numRecords) {
 
     download_col = document.createElement('td');
     download_link = document.createElement('a');
-    download_link.className += ' icon-download';
-    addFileLink(download_link, blob, type + '.csv');
+    download_link.className += 'icon-download';
+    download_link.href = window.URL.createObjectURL(blob);
+    download_link.setAttribute('download', 'fileName');
+    download_link.download = type + '.csv'
 
     download_col.appendChild(download_link);
     table_row.appendChild(download_col);
