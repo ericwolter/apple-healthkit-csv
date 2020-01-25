@@ -8,6 +8,7 @@ var input = document.getElementById('input');
 var table = document.getElementById('results-table');
 var current_file;
 var parser = new DOMParser();
+var decoder = new TextDecoder("utf-8");
 
 var STAGE_START = 0;
 var STAGE_READING = 1;
@@ -15,6 +16,12 @@ var STAGE_AGGREGATING = 2;
 var STAGE_GENERATING = 3;
 var STAGE_FINISHED = 4;
 var STAGE_TOTAL = 3;
+
+var logs = [];
+function logDebug(message) {
+  //console.debug(message);
+  //logs.push(message);
+}
 
 setProgress(0, 0);
 
@@ -31,6 +38,7 @@ function setProgress(stage, percent) {
     dropzone.textContent = 'Lifting weights... (' + percentage + '%)';
   } else if (stage === STAGE_FINISHED) {
     dropzone.textContent = 'Exhausted, catching a breath! (100%)';
+    console.info('[STAGE_FINISHED]', Date.now());
   } else {
     dropzone.textContent = 'Select your export.xml, ready to go!';
   }
@@ -106,7 +114,8 @@ function aggregateData(records, callback) {
 
 function addFileLink(link_element, blob, filename) {
   link_element.addEventListener('click', function (e) {
-    saveAs(blob, filename);
+    const url = window.URL.createObjectURL(blob);
+    saveAs(url, filename);
     e.preventDefault();
   });
 }
@@ -180,7 +189,7 @@ function generateCSV(sheets, numRecords) {
 }
 
 function extractRecords(line, records) {
-  var xml = parser.parseFromString(line, 'text/xml');
+  var xml = parser.parseFromString(line, 'text/html');
   var recordNodes = xml.getElementsByTagName('Record');
 
   for (var r = 0; r < recordNodes.length; r++) {
@@ -216,10 +225,12 @@ function extractRecords(line, records) {
 }
 
 function readFileRecordByRecord(file, callback) {
-  var optimal_size = file.size / (32*1024*1024);
-  optimal_size = Math.min(optimal_size, 32*1024*1024); // max: 32MB
-  optimal_size = Math.max(optimal_size, 1*1024*1024); // min: 1MB
-  var CHUNK_SIZE = optimal_size;
+  console.info('[STAGE_READING]', Date.now());
+  logDebug("[start] function readFileRecordByRecord(file, callback)");
+  var CHUNK_SIZE = 1*1024*1024;
+  logDebug("[readFileRecordByRecord] file.size: "+file.size);
+  logDebug("[readFileRecordByRecord] chunk_size: "+file.CHUNK_SIZE);
+
   var offset = 0;
   var reader = new FileReader();
   var remainingWindow = new Uint8Array();
@@ -236,26 +247,29 @@ function readFileRecordByRecord(file, callback) {
   }
 
   reader.onload = function(ev) {
-    var textWindow = concatBuffer(remainingWindow, new Uint8Array(ev.target.result));
+    const buffer = new Uint8Array(ev.target.result);
+    var textWindow = concatBuffer(remainingWindow, buffer);
     var textOffset = 0;
-    for (var i = 0; i < textWindow.length; i++) {
+
+    for (var i = textWindow.length-1; i > 0; i--) {
       var character = textWindow[i];
       if(character === 0x0A || character === 0x0D) {
-        var lineStart = textOffset;
-        var lineEnd = i;
         textOffset = i;
-        var lineSlice = textWindow.subarray(lineStart, lineEnd);
-        var line = Utf8ArrayToStr(lineSlice);
+        const lineSlice = textWindow.subarray(0, i);
+        const line = decoder.decode(lineSlice);
         extractRecords(line, records);
+        break;
       }
     }
+
     remainingWindow = textWindow.subarray(textOffset);
     setProgress(STAGE_READING, offset/file.size);
     offset += CHUNK_SIZE;
     seek();
   }
   reader.onerror = function(ev) {
-    console.log(ev, records);
+    logDebug('[readFileRecordByRecord] reader.onerror: ' + JSON.stringify(ev));
+    logDebug('[readFileRecordByRecord] Error reading file "' + JSON.stringify(file) + '" at offset: ' + JSON.stringify(offset));
     callback('Error reading file "' + file + '" at offset: ' + offset);
   }
   seek();
@@ -266,6 +280,8 @@ function readFileRecordByRecord(file, callback) {
       callback(null, records);
       return;
     }
+    // logDebug('[slice] start', offset);
+    // logDebug('[slice] end  ', offset + CHUNK_SIZE);
     var slice = file.slice(offset, offset + CHUNK_SIZE);
     reader.readAsArrayBuffer(slice);
   }
@@ -292,37 +308,3 @@ input.addEventListener('change', function () {
     });
   });
 }, false);
-
-function Utf8ArrayToStr(array) {
-  var out, i, len, c;
-  var char2, char3;
-
-  out = "";
-  len = array.length;
-  i = 0;
-  while(i < len) {
-    c = array[i++];
-    switch(c >> 4)
-    {
-      case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-        // 0xxxxxxx
-        out += String.fromCharCode(c);
-        break;
-      case 12: case 13:
-        // 110x xxxx   10xx xxxx
-        char2 = array[i++];
-        out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
-        break;
-      case 14:
-        // 1110 xxxx  10xx xxxx  10xx xxxx
-        char2 = array[i++];
-        char3 = array[i++];
-        out += String.fromCharCode(((c & 0x0F) << 12) |
-                       ((char2 & 0x3F) << 6) |
-                       ((char3 & 0x3F) << 0));
-        break;
-    }
-  }
-
-  return out;
-}
