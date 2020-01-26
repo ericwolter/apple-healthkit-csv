@@ -191,3 +191,12 @@ td:last-child {
   color: #8e8e93;
   text-decoration: none;
 }
+
+footer {
+  margin: 11px auto 11px;
+  text-align: center;
+}
+footer a {
+  font-size: 11px;
+  color: #8e8e93;
+}

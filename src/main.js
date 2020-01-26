@@ -1,21 +1,20 @@
 /*jslint indent: 2*/
 /*global FileReader, DOMParser, Blob*/
 'use strict';
-var NEWLINE = '\n';
-var CSV_SEPARATOR = ',';
-var dropzone = document.getElementById('dropzone');
-var input = document.getElementById('input');
-var table = document.getElementById('results-table');
-var current_file;
-var parser = new DOMParser();
-var decoder = new TextDecoder("utf-8");
+const NEWLINE = '\n';
+let CSV_SEPARATOR = ',';
+const dropzone = document.getElementById('dropzone');
+const input = document.getElementById('input');
+const table = document.getElementById('results-table');
+const parser = new DOMParser();
+const decoder = new TextDecoder("utf-8");
 
-var STAGE_START = 0;
-var STAGE_READING = 1;
-var STAGE_AGGREGATING = 2;
-var STAGE_GENERATING = 3;
-var STAGE_FINISHED = 4;
-var STAGE_TOTAL = 3;
+const STAGE_START = 0;
+const STAGE_READING = 1;
+const STAGE_AGGREGATING = 2;
+const STAGE_GENERATING = 3;
+const STAGE_FINISHED = 4;
+const STAGE_TOTAL = 3;
 
 var logs = [];
 function logDebug(message) {
@@ -26,7 +25,7 @@ function logDebug(message) {
 setProgress(0, 0);
 
 function setProgress(stage, percent) {
-  var percentage = percent;
+  let percentage = percent;
   percentage *= 100;
   percentage = Math.round(percentage);
 
@@ -230,7 +229,6 @@ function readFileRecordByRecord(file, callback) {
   var remainingWindow = new Uint8Array();
   var records = [];
 
-  current_file = file;
   setProgress(STAGE_READING, 0);
 
   function concatBuffer(buffer1, buffer2) {
