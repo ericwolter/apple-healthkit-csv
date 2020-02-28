@@ -20,7 +20,7 @@
     "normalize.css": "^8.0.1"
   },
   "devDependencies": {
-    "html-inline": "^1.2.0",
+    "html-inline": "git+https://github.com/alessioalex/html-inline.git",
     "html-minifier": "^4.0.0"
   }
 }
