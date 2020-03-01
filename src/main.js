@@ -138,6 +138,7 @@ function generateCSV(sheets, numRecords) {
   yieldingLoop(types.length, 1, function (t) {
     type = types[t];
     csv = '';
+    csv += 'sep=' + CSV_SEPARATOR + NEWLINE;
 
     sheet = sheets[type];
     csv += sheet.columns.join(CSV_SEPARATOR) + NEWLINE;
