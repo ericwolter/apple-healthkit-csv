@@ -126,6 +126,9 @@ a:active {
 #contact a {
   font-size: 11px;
 }
+#coffee {
+  margin-top: 45px;
+}
 table {
   margin: 45px auto;
   max-width: 600px;
