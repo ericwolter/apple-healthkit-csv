@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/ericwolter/apple-healthkit-csv#readme",
   "dependencies": {
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "xlsx": "^0.15.6"
   },
   "devDependencies": {
     "html-inline": "git+https://github.com/alessioalex/html-inline.git",

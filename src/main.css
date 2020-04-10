@@ -24,38 +24,13 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-download {
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+}
 .icon-download:before {
   content: "\e900";
-}
-
-#message {
-  display: none;
-  opacity: 0;
-  transition: opacity .5s linear;
-
-  position: fixed;
-  font-weight: 300;
-  text-align: center;
-  color: #fff;
-  background: #f00;
-  font-size: 14px;
-  padding: 16px;
-  width: 100%;
-  z-index: 999;
-  background: #ff3b30;
-  background: linear-gradient(180, #ff3b30, #e60200);
-}
-
-#message a {
-  color: #fff;
-  font-size: 14px;
-  text-decoration: underline;
-}
-#message.show {
-  display: block;
-}
-#message.open {
-  opacity: 0.9;
 }
 
 #content {
@@ -63,7 +38,7 @@ html, body {
   width: 90%;
   margin: 0 auto;
   text-align: center;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 21px;
   font-weight: 300;
 }
@@ -83,13 +58,13 @@ h1 {
   font-size: 45px;
   line-height: 55px;
 }
+h2 {
+  font-weight: lighter;
+}
 a {
   color: #ff2d55;
   border: 0;
   background: 0;
-  width: 32px;
-  height: 32px;
-  font-size: 24px;
   cursor: pointer;
 }
 a:hover {
@@ -121,7 +96,6 @@ a:active {
   margin: 13px -13px;
   margin-top: 0;
   color: #8e8e93;
-  text-decoration: none;
 }
 #contact a {
   font-size: 11px;
@@ -187,12 +161,16 @@ td:last-child {
 }
 #technical-details a {
   font-size: 11px;
-  text-decoration: none;
 }
 .asterik {
   font-size: 11px;
   color: #8e8e93;
   text-decoration: none;
+}
+
+#faq {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 footer {
