@@ -66,6 +66,7 @@ a {
   border: 0;
   background: 0;
   cursor: pointer;
+  white-space: nowrap;
 }
 a:hover {
   color: #f9cfd7;
@@ -101,7 +102,6 @@ a:active {
   font-size: 11px;
 }
 #coffee {
-  margin-top: 45px;
 }
 table {
   margin: 45px auto;
@@ -168,9 +168,13 @@ td:last-child {
   text-decoration: none;
 }
 
-#faq {
+.faq {
   max-width: 600px;
   margin: 0 auto;
+}
+
+.appstore-link {
+  transform: scale(0.7)
 }
 
 footer {
