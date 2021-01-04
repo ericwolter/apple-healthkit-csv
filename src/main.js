@@ -6,6 +6,8 @@ let CSV_SEPARATOR = ',';
 const dropzone = document.getElementById('dropzone');
 const input = document.getElementById('input');
 const table = document.getElementById('results-table');
+const logDiv = document.getElementById('debuglog');
+const logArea = document.getElementById('logtext');
 const parser = new DOMParser();
 const decoder = new TextDecoder("utf-8");
 
@@ -16,11 +18,28 @@ const STAGE_GENERATING = 3;
 const STAGE_FINISHED = 4;
 const STAGE_TOTAL = 3;
 
-var logs = [];
-function logDebug(message) {
-  //console.debug(message);
-  //logs.push(message);
+// var logs = [];
+function logError(message) {
+  console.error(message);
+  logArea.value += "[ERROR] " + message + '\n'
+  // logs.push("[ERROR] " + message);
 }
+function logInfo(message) {
+  // console.info(message);
+  logArea.value += "[INFO] " + message + '\n'
+  // logs.push("[INFO] " + message);
+}
+function logDebug(message) {
+  // console.debug(message);
+  logArea.value += "[DEBUG] " + message + '\n'
+  // logs.push("[DEBUG] " + message);
+}
+
+document.getElementById('showdebug').addEventListener('click', function (e) {
+  e.preventDefault();
+  logDiv.style.display = "block";
+}, false);
+
 
 setProgress(0, 0);
 
@@ -37,14 +56,12 @@ function setProgress(stage, percent) {
     dropzone.textContent = 'Lifting weights... (' + percentage + '%)';
   } else if (stage === STAGE_FINISHED) {
     dropzone.textContent = 'Exhausted, catching a breath! (100%)';
-    console.info('[STAGE_FINISHED]', Date.now());
   } else {
     dropzone.textContent = 'Select your export.xml, ready to go!';
   }
 }
 
 function yieldingLoop(count, chunksize, callback, finished) {
-
   var i = 0;
   (function chunk() {
     var end = Math.min(i + chunksize, count);
@@ -61,10 +78,15 @@ function yieldingLoop(count, chunksize, callback, finished) {
 }
 
 function aggregateData(records, callback) {
+  logInfo('[STAGE_AGGREGATING] ' + (new Date()).toUTCString());
   var sheets = {},
     a;
   var progress_current = 0;
   var progress_total = records.length;
+
+  if(records.length < 1) {
+    logError("No records found")
+  }
 
   yieldingLoop(records.length, 1000, function (r) {
     var record = records[r], // one record in the xml
@@ -76,7 +98,6 @@ function aggregateData(records, callback) {
       attribute; // the current attribute being added to the csv table
 
     // find type attribute
-
     if (record.attributes.type !== undefined) {
       type = record.attributes.type.value;
       if (type) {
@@ -99,10 +120,10 @@ function aggregateData(records, callback) {
         }
         rows.push(row);
       } else {
-        console.error("invalid record type");
+        logError("Invalid record type at index: " + r)
       }
     } else {
-      console.error("no type attribute");
+      logError("No type attribute at index: " + r)
     }
     progress_current += 1;
     setProgress(STAGE_AGGREGATING, progress_current / progress_total);
@@ -112,6 +133,8 @@ function aggregateData(records, callback) {
 }
 
 function generateCSV(sheets, numRecords) {
+  logInfo('[STAGE_GENERATING] ' + (new Date()).toUTCString());
+
   var types = Object.keys(sheets), // the types from the xml
     type, // the current type
     sheet, // the sheet containing the data for the current type
@@ -135,6 +158,11 @@ function generateCSV(sheets, numRecords) {
 
   table_body = document.createElement('tbody');
   table.replaceChild(table_body, table.firstElementChild);
+  
+  if(types.length < 1) {
+    logError("No types found")
+  }
+
   yieldingLoop(types.length, 1, function (t) {
     type = types[t];
     csv = '';
@@ -178,6 +206,7 @@ function generateCSV(sheets, numRecords) {
 
     table_body.appendChild(table_row);
   }, function() {
+    logInfo('[STAGE_FINISHED] ' + (new Date()).toUTCString());
     setProgress(STAGE_FINISHED, 1);
   });
 }
@@ -219,11 +248,11 @@ function extractRecords(line, records) {
 }
 
 function readFileRecordByRecord(file, callback) {
-  console.info('[STAGE_READING]', Date.now());
+  logInfo('[STAGE_READING] ' + (new Date()).toUTCString());
   logDebug("[start] function readFileRecordByRecord(file, callback)");
   var CHUNK_SIZE = 1*1024*1024;
   logDebug("[readFileRecordByRecord] file.size: "+file.size);
-  logDebug("[readFileRecordByRecord] chunk_size: "+file.CHUNK_SIZE);
+  logDebug("[readFileRecordByRecord] chunk_size: "+CHUNK_SIZE);
 
   var offset = 0;
   var reader = new FileReader();
@@ -289,12 +318,12 @@ dropzone.addEventListener('click', function (e) {
 input.addEventListener('change', function () {
   readFileRecordByRecord(this.files[0], function(err, records) {
     if(err) {
-      console.error(err);
+      logError(err)
       return;
     }
     aggregateData(records, function(err, sheets) {
       if(err) {
-        console.error(err);
+        logError(err)
         return;
       }
       generateCSV(sheets, records.length);
