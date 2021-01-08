@@ -18,21 +18,16 @@ const STAGE_GENERATING = 3;
 const STAGE_FINISHED = 4;
 const STAGE_TOTAL = 3;
 
-// var logs = [];
 function logError(message) {
   console.error(message);
   logArea.value += "[ERROR] " + message + '\n'
-  // logs.push("[ERROR] " + message);
 }
 function logInfo(message) {
-  // console.info(message);
+  console.info(message);
   logArea.value += "[INFO] " + message + '\n'
-  // logs.push("[INFO] " + message);
 }
 function logDebug(message) {
-  // console.debug(message);
-  logArea.value += "[DEBUG] " + message + '\n'
-  // logs.push("[DEBUG] " + message);
+  console.debug(message);
 }
 
 document.getElementById('showdebug').addEventListener('click', function (e) {
@@ -89,6 +84,7 @@ function aggregateData(records, callback) {
   }
 
   yieldingLoop(records.length, 1000, function (r) {
+    logDebug('aggregateData: ' + r + '/' + records.length)
     var record = records[r], // one record in the xml
       type, // the type of the record
       sheet, // object containing the csv table
@@ -164,6 +160,7 @@ function generateCSV(sheets, numRecords) {
   }
 
   yieldingLoop(types.length, 1, function (t) {
+    logDebug('generateCSV: ' + t + '/' + types.length)
     type = types[t];
     csv = '';
     csv += 'sep=' + CSV_SEPARATOR + NEWLINE;
@@ -251,8 +248,13 @@ function readFileRecordByRecord(file, callback) {
   logInfo('[STAGE_READING] ' + (new Date()).toUTCString());
   logDebug("[start] function readFileRecordByRecord(file, callback)");
   var CHUNK_SIZE = 1*1024*1024;
-  logDebug("[readFileRecordByRecord] file.size: "+file.size);
-  logDebug("[readFileRecordByRecord] chunk_size: "+CHUNK_SIZE);
+  logInfo("[readFileRecordByRecord] file.size: "+file.size);
+  logInfo("[readFileRecordByRecord] chunk_size: "+CHUNK_SIZE);
+
+  if(file.size > 1*1024*1024*1024) {
+    callback('Unfortunately your export file is too large ('+(file.size/1024/1024/1024).toFixed(1)+'GB) to be handled in most browsers!\nThe limit on my laptop is around 1GB.\n\nI strongly encourage you to check out the app as an alternative :)');
+    return
+  }
 
   var offset = 0;
   var reader = new FileReader();
@@ -290,8 +292,8 @@ function readFileRecordByRecord(file, callback) {
     seek();
   }
   reader.onerror = function(ev) {
-    logDebug('[readFileRecordByRecord] reader.onerror: ' + JSON.stringify(ev));
-    logDebug('[readFileRecordByRecord] Error reading file "' + JSON.stringify(file) + '" at offset: ' + JSON.stringify(offset));
+    logError('[readFileRecordByRecord] reader.onerror: ' + JSON.stringify(ev));
+    logError('[readFileRecordByRecord] Error reading file "' + JSON.stringify(file) + '" at offset: ' + JSON.stringify(offset));
     callback('Error reading file "' + file + '" at offset: ' + offset);
   }
   seek();
@@ -302,8 +304,7 @@ function readFileRecordByRecord(file, callback) {
       callback(null, records);
       return;
     }
-    // logDebug('[slice] start', offset);
-    // logDebug('[slice] end  ', offset + CHUNK_SIZE);
+    // logDebug('[slice] [' + offset + ':' + (offset + CHUNK_SIZE) + '] ' + file.size);
     var slice = file.slice(offset, offset + CHUNK_SIZE);
     reader.readAsArrayBuffer(slice);
   }
@@ -319,11 +320,13 @@ input.addEventListener('change', function () {
   readFileRecordByRecord(this.files[0], function(err, records) {
     if(err) {
       logError(err)
+      alert(err)
       return;
     }
     aggregateData(records, function(err, sheets) {
       if(err) {
         logError(err)
+        alert(err)
         return;
       }
       generateCSV(sheets, records.length);
