@@ -1,203 +1,246 @@
 @font-face {
-  font-family: 'icons';
-  src:url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAAT0AAsAAAAABKgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgCGL+9mNtYXAAAAFoAAAAVAAAAFQXVtKHZ2FzcAAAAbwAAAAIAAAACAAAABBnbHlmAAABxAAAAQQAAAEEi1d2U2hlYWQAAALIAAAANgAAADYFdevVaGhlYQAAAwAAAAAkAAAAJANiAeZobXR4AAADJAAAABQAAAAUBIAAAGxvY2EAAAM4AAAADAAAAAwAKACWbWF4cAAAA0QAAAAgAAAAIAAIAEpuYW1lAAADZAAAAW4AAAFu0YJtmXBvc3QAAATUAAAAIAAAACAAAwAAAAMBQAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA6QAB4P/gACAB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEADgAAAAKAAgAAgACAAEAIOkA//3//wAAAAAAIOkA//3//wAB/+MXBAADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAgAA/9UBgAHVACQARwAAJSIGDwERNCYjIgYVEScuASMiBhUUFh8BHgEzMjY/AT4BNTQmIzcjIgYVFBY7AREhETMyNjU0JisBIgYVERQWMyEyNjURNCYjAQkCAwE6BQQEBToBAwIEBQEBSgEDAgIDAUoBAQUEZXcEBQUEd/6kdwQFBQR3BwsLBwFcBwsLB+gCAToBIQQFBQT+3zoBAgYEAQQBSQECAgFJAQQBBAZbBQQEBf63AUkFBAQFCwf+twgLCwgBSQcLAAABAAAAAQAAKfjTT18PPPUACwIAAAAAANJrVZcAAAAA0mtVlwAA/9UBgAHVAAAACAACAAAAAAAAAAEAAAHg/+AAAAIAAAAAAAGAAAEAAAAAAAAAAAAAAAAAAAAFAgAAAAAAAAAAAAAAAQAAAAGAAAAAAAAAAAoAFAAeAIIAAQAAAAUASAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA4ArgABAAAAAAABAAUAAAABAAAAAAACAAcATgABAAAAAAADAAUAMAABAAAAAAAEAAUAYwABAAAAAAAFAAsADwABAAAAAAAGAAUAPwABAAAAAAAKABoAcgADAAEECQABAAoABQADAAEECQACAA4AVQADAAEECQADAAoANQADAAEECQAEAAoAaAADAAEECQAFABYAGgADAAEECQAGAAoARAADAAEECQAKADQAjGljb25zAGkAYwBvAG4Ac1ZlcnNpb24gMS4wAFYAZQByAHMAaQBvAG4AIAAxAC4AMGljb25zAGkAYwBvAG4Ac2ljb25zAGkAYwBvAG4Ac1JlZ3VsYXIAUgBlAGcAdQBsAGEAcmljb25zAGkAYwBvAG4Ac0ZvbnQgZ2VuZXJhdGVkIGJ5IEljb01vb24uAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('woff');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'icons';
+    src: url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAAT0AAsAAAAABKgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgCGL+9mNtYXAAAAFoAAAAVAAAAFQXVtKHZ2FzcAAAAbwAAAAIAAAACAAAABBnbHlmAAABxAAAAQQAAAEEi1d2U2hlYWQAAALIAAAANgAAADYFdevVaGhlYQAAAwAAAAAkAAAAJANiAeZobXR4AAADJAAAABQAAAAUBIAAAGxvY2EAAAM4AAAADAAAAAwAKACWbWF4cAAAA0QAAAAgAAAAIAAIAEpuYW1lAAADZAAAAW4AAAFu0YJtmXBvc3QAAATUAAAAIAAAACAAAwAAAAMBQAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA6QAB4P/gACAB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEADgAAAAKAAgAAgACAAEAIOkA//3//wAAAAAAIOkA//3//wAB/+MXBAADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAgAA/9UBgAHVACQARwAAJSIGDwERNCYjIgYVEScuASMiBhUUFh8BHgEzMjY/AT4BNTQmIzcjIgYVFBY7AREhETMyNjU0JisBIgYVERQWMyEyNjURNCYjAQkCAwE6BQQEBToBAwIEBQEBSgEDAgIDAUoBAQUEZXcEBQUEd/6kdwQFBQR3BwsLBwFcBwsLB+gCAToBIQQFBQT+3zoBAgYEAQQBSQECAgFJAQQBBAZbBQQEBf63AUkFBAQFCwf+twgLCwgBSQcLAAABAAAAAQAAKfjTT18PPPUACwIAAAAAANJrVZcAAAAA0mtVlwAA/9UBgAHVAAAACAACAAAAAAAAAAEAAAHg/+AAAAIAAAAAAAGAAAEAAAAAAAAAAAAAAAAAAAAFAgAAAAAAAAAAAAAAAQAAAAGAAAAAAAAAAAoAFAAeAIIAAQAAAAUASAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA4ArgABAAAAAAABAAUAAAABAAAAAAACAAcATgABAAAAAAADAAUAMAABAAAAAAAEAAUAYwABAAAAAAAFAAsADwABAAAAAAAGAAUAPwABAAAAAAAKABoAcgADAAEECQABAAoABQADAAEECQACAA4AVQADAAEECQADAAoANQADAAEECQAEAAoAaAADAAEECQAFABYAGgADAAEECQAGAAoARAADAAEECQAKADQAjGljb25zAGkAYwBvAG4Ac1ZlcnNpb24gMS4wAFYAZQByAHMAaQBvAG4AIAAxAC4AMGljb25zAGkAYwBvAG4Ac2ljb25zAGkAYwBvAG4Ac1JlZ3VsYXIAUgBlAGcAdQBsAGEAcmljb25zAGkAYwBvAG4Ac0ZvbnQgZ2VuZXJhdGVkIGJ5IEljb01vb24uAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-html, body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+html,
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
-[class^="icon-"], [class*=" icon-"] {
-  font-family: 'icons';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: 'icons';
+    speak-as: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-download {
-  width: 32px;
-  height: 32px;
-  font-size: 24px;
+    width: 32px;
+    height: 32px;
+    font-size: 24px;
 }
+
 .icon-download:before {
-  content: "\e900";
+    content: "\e900";
 }
 
 #content {
-  max-width: 960px;
-  width: 90%;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 16px;
-  line-height: 21px;
-  font-weight: 300;
+    max-width: 960px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 300;
 }
+
 @keyframes beat {
-    0% {transform: scale(1)}
-    50% {transform: scale(1.1)}
-    100% {transform: scale(1)}
+    0% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(1.1)
+    }
+    100% {
+        transform: scale(1)
+    }
 }
+
 #heart {
-  margin-top: 45px;
-  width: 100px;
-  animation: beat 2s ease 0s infinite normal;
+    margin-top: 45px;
+    width: 100px;
+    animation: beat 2s ease 0s infinite normal;
 }
+
 h1 {
-  margin: 45px;
-  font-weight: lighter;
-  font-size: 45px;
-  line-height: 55px;
+    margin: 45px;
+    font-weight: lighter;
+    font-size: 45px;
+    line-height: 55px;
 }
+
 h2 {
-  font-weight: lighter;
+    font-weight: lighter;
 }
+
 strong {
-  font-weight: 600;
+    font-weight: 600;
 }
+
 a {
-  color: #ff2d55;
-  border: 0;
-  background: 0;
-  cursor: pointer;
-  white-space: nowrap;
+    color: #ff2d55;
+    border: 0;
+    background: 0;
+    cursor: pointer;
+    white-space: nowrap;
 }
+
 a:hover {
-  color: #f9cfd7;
+    color: #f9cfd7;
 }
+
 a:active {
-  color: #f9cfd7;
+    color: #f9cfd7;
 }
+
 #dropzone {
-  position: relative;
-  max-width: 600px;
-  margin: 0 auto;
-  height: 100px;
-  border: 2px solid #ff2d55;
-  border-radius: 7px;
-  color: #ff2d55;
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 100px;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    height: 100px;
+    border: 2px solid #ff2d55;
+    border-radius: 7px;
+    color: #ff2d55;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 100px;
 }
+
 #disclaimer {
-  font-size: 11px;
-  margin: 13px -13px;
-  margin-bottom: 0;
-  color: #8e8e93;
+    font-size: 11px;
+    margin: 13px -13px;
+    margin-bottom: 0;
+    color: #8e8e93;
 }
+
 #contact {
-  font-size: 11px;
-  margin: 13px -13px;
-  margin-top: 0;
-  color: #8e8e93;
+    font-size: 11px;
+    margin: 13px -13px;
+    margin-top: 0;
+    color: #8e8e93;
 }
+
 #contact a {
-  font-size: 11px;
+    font-size: 11px;
 }
+
 #debug {
-  font-size: 8px;
+    font-size: 8px;
 }
+
 #debug a {
-  font-size: 8px;
+    font-size: 8px;
 }
+
 #debuglog {
-  margin: 0 auto;
-  max-width: 600px;
-  font-size:11px;
+    margin: 0 auto;
+    max-width: 600px;
+    font-size: 11px;
 }
+
 #logtext {
-  width: 100%;
-  height: 100px;
+    width: 100%;
+    height: 100px;
 }
+
+#jump {
+    display: none;
+    font-size: 24px;
+    margin: 24px;
+}
+
 table {
-  margin: 45px auto;
-  max-width: 600px;
-  width: 90%;
-  text-align: left;
-  font-size: 17px;
-  border-collapse: collapse;
-  table-layout: fixed;
+    margin: 45px auto;
+    max-width: 600px;
+    width: 90%;
+    text-align: left;
+    font-size: 17px;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
+
 tr {
-  border: solid;
-  border-width: 1px 0;
-  border-color: #c8c7cc;
+    border: solid;
+    border-width: 1px 0;
+    border-color: #c8c7cc;
 }
+
 tr:first-child {
-  border-top: none;
+    border-top: none;
 }
+
 tr:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
+
 td {
-  padding: 16px;
+    padding: 16px;
 }
+
 td:first-child {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 td:last-child {
-  width: 50px;
-  text-align: right;
+    width: 50px;
+    text-align: right;
 }
+
 #progress {
-  position: absolute;
-  bottom: -1px;
-  /*height: 98px;*/
-  height: 6px; /*98px*/
-  width: 0%;
-  background: #ff2d55;
-  /*border-radius: 5px;*/
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  transition: width .1s;
+    position: absolute;
+    bottom: -1px;
+    /*height: 98px;*/
+    height: 6px;
+    /*98px*/
+    width: 0%;
+    background: #ff2d55;
+    /*border-radius: 5px;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: width .1s;
 }
+
 .ad {
-  max-width: 600px;
-  margin: 0 auto;
+    max-width: 600px;
+    margin: 0 auto;
 }
+
 #technical-details {
-  max-width: 600px;
-  margin: 0 auto;
-  border-top: 1px #c8c7cc solid;
-  font-size: 11px;
-  color: #8e8e93;
-  padding-top: 11px;
+    max-width: 600px;
+    margin: 0 auto;
+    border-top: 1px #c8c7cc solid;
+    font-size: 11px;
+    color: #8e8e93;
+    padding-top: 11px;
 }
+
 #technical-details a {
-  font-size: 11px;
+    font-size: 11px;
 }
+
 .asterik {
-  font-size: 11px;
-  color: #8e8e93;
-  text-decoration: none;
+    font-size: 11px;
+    color: #8e8e93;
+    text-decoration: none;
 }
 
 .faq {
-  max-width: 600px;
-  margin: 0 auto;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .appstore-link {
-  transform: scale(0.7)
+    transform: scale(0.7)
 }
 
 footer {
-  margin: 11px auto 11px;
-  text-align: center;
+    margin: 11px auto 11px;
+    text-align: center;
 }
+
 footer a {
-  font-size: 11px;
-  color: #8e8e93;
+    font-size: 11px;
+    color: #8e8e93;
 }
