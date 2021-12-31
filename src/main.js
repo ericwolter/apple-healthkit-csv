@@ -54,7 +54,7 @@ function setProgress(stage, percent) {
     } else if (stage === STAGE_FINISHED) {
         dropzone.textContent = 'Exhausted, catching a breath! (100%)';
     } else {
-        dropzone.textContent = 'Select your export.xml, ready to go!';
+        dropzone.textContent = 'Ready to go! Please select your export.xml';
     }
 }
 
