@@ -1,99 +1,149 @@
 <!doctype html>
 <html lang=en>
-<head>
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42589062-1"></script> -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'UA-42589062-1');
-  </script>
-  <meta charset=utf-8>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="description" content="This site allows you to convert the export.xml from Apple's Health app to an easy to use and universal comma-separated file">
-  <title>Apple Health XML to CSV Converter - ericwolter.com</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-itunes-app" content="app-id=1535380115">
-  <link rel="stylesheet" href="../node_modules/normalize.css/normalize.css">
-  <link rel="stylesheet" href="main.css">
+<head>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42589062-1"></script> -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-42589062-1');
+    </script>
+    <meta charset=utf-8>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="This site allows you to convert the export.xml from Apple's Health app to an easy to use and universal comma-separated file">
+    <title>Apple Health XML to CSV Converter - ericwolter.com</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-itunes-app" content="app-id=1535380115">
+    <link rel="stylesheet" href="../node_modules/normalize.css/normalize.css">
+    <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
-  <div id="content" role="main">
-    <svg id="heart" baseProfile="basic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189.9448242 167.9176178"><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="-308.164" y1="374.749" x2="-308.164" y2="373.749" gradientTransform="matrix(189.94482 0 0 -167.91763 58629.215 62926.957)"><stop offset="0" stop-color="#ee62a3"/><stop offset="1" stop-color="#ed3327"/></linearGradient><path fill="url(#a)" d="M95.118 167.918c13.996-.05 94.902-54.59 94.827-112.858-.04-30.516-24.69-55.168-55.056-55.06-15.75.056-29.944 6.76-39.954 17.46C84.896 6.843 70.674.23 54.913.285 24.546.393-.04 25.22 0 55.735c.075 58.27 81.122 112.232 95.118 112.183z"/></svg>
-    <h1>Apple Health XML to CSV Converter</h1>
-    <div id="dropzone">
+    <div id="content" role="main">
+        <svg id="heart" baseProfile="basic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189.9448242 167.9176178"><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="-308.164" y1="374.749" x2="-308.164" y2="373.749" gradientTransform="matrix(189.94482 0 0 -167.91763 58629.215 62926.957)"><stop offset="0" stop-color="#ee62a3"/><stop offset="1" stop-color="#ed3327"/></linearGradient><path fill="url(#a)" d="M95.118 167.918c13.996-.05 94.902-54.59 94.827-112.858-.04-30.516-24.69-55.168-55.056-55.06-15.75.056-29.944 6.76-39.954 17.46C84.896 6.843 70.674.23 54.913.285 24.546.393-.04 25.22 0 55.735c.075 58.27 81.122 112.232 95.118 112.183z"/></svg>
+        <h1>Apple Health XML to CSV Converter</h1>
+        <div id="dropzone">
+        </div>
+        <input type="file" id="input" accept=".xml" style="display:none">
+        <a id="jump" href="#results-table" style="">Jump to results ▼</a>
+        <div id="disclaimer">All work is done locally by your browser. Nothing is uploaded to my server.<a class="asterik" href="#details">*</a></div>
+        <div id="contact">Feel free to <a href="https://mailhide.io/e/bLVMN" onclick="mailhidepopup=window.open('https://mailhide.io/e/bLVMN','mailhidepopup','width=580,height=635'); return false;">contact me</a> if you have any questions!
+            <div id="debug">
+                <div>If you running into issues please <a id="showdebug" href="#">click here</a> after running the converter.</div>
+                <div id="debuglog" style="display: none">
+                    <textarea id="logtext"></textarea>
+                    <div>Please copy and paste these log messages and attach them when contacting me. I have taking great care - even impacting the usefulness - to avoid sending any personal data. However, additionally please verify manually that you are okay
+                        with sending this data.</div>
+                </div>
+            </div>
+        </div>
+        <div class="faq">
+            <h2>iPhone App</h2>
+            <p>
+                Handling (very) large XML files can be cumbersome. For this reason I created a very simple app to export your health data into CSV.
+            </p>
+            <p>
+                It is also completely <strong>free</strong> and has the same focus on <strong>privacy</strong>.
+            </p>
+            <a class="appstore-link" href="https://apps.apple.com/us/app/molicula/id1535380115?itsct=apps_box&amp;itscg=30200" style="margin-top: -1em; display: inline-block; overflow: hidden; border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-US?size=250x83&amp;releaseDate=1380153600&h=ac9a43f7663a7a0efbfcb39120889615" alt="Download on the App Store" style="border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; width: 250px; height: 83px;"></a>
+        </div>
+        <div id="coffee">
+            <style>
+                .bmc-button img {
+                    height: 34px !important;
+                    width: 35px !important;
+                    margin-bottom: 1px !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                    vertical-align: middle !important;
+                }
+                
+                .bmc-button {
+                    padding: 7px 10px 7px 10px !important;
+                    line-height: 35px !important;
+                    height: 51px !important;
+                    min-width: 217px !important;
+                    text-decoration: none !important;
+                    display: inline-flex !important;
+                    color: #ffffff !important;
+                    background-color: #FF5F5F !important;
+                    border-radius: 5px !important;
+                    border: 1px solid transparent !important;
+                    padding: 7px 10px 7px 10px !important;
+                    font-size: 22px !important;
+                    letter-spacing: 0.6px !important;
+                    box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+                    -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+                    margin: 0 auto !important;
+                    font-family: 'Cookie', cursive !important;
+                    -webkit-box-sizing: border-box !important;
+                    box-sizing: border-box !important;
+                    -o-transition: 0.3s all linear !important;
+                    -webkit-transition: 0.3s all linear !important;
+                    -moz-transition: 0.3s all linear !important;
+                    -ms-transition: 0.3s all linear !important;
+                    transition: 0.3s all linear !important;
+                }
+                
+                .bmc-button:hover,
+                .bmc-button:active,
+                .bmc-button:focus {
+                    -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+                    text-decoration: none !important;
+                    box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+                    opacity: 0.85 !important;
+                    color: #ffffff !important;
+                }
+            </style>
+            <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+            <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/ericwolter"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:15px;font-size:28px !important;">Buy me a coffee</span></a>
+        </div>
+        <table id="results-table">
+            <tbody>
+            </tbody>
+        </table>
+        <div class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <h3 class="question">How do I export my apple health data?</h3>
+            <div class="answer">
+                <p>
+                    The Apple's documentation about <a href="https://support.apple.com/guide/iphone/share-health-and-fitness-data-iph27f6325b2/ios">exporting and sharing your health data</a> is very short. Sometimes these actions are not obvious. A more
+                    useful description is the <a href="https://osxdaily.com/2019/05/20/export-health-data-from-iphone/">step-by-step guide</a> compiled by OSXDaily.
+                </p>
+            </div>
+            <h3 class="question">How do I get the export.xml from my apple health data?</h3>
+            <div class="answer">
+                <p>
+                    Please extract the "export.zip" you exported from the Health app. Inside you find the "export.xml" file. Use this XML file for the Apple Health Converter on this page. Note that the XML file can be very large (e.g. > 100MB). But, as the conversion is
+                    performed locally in your browser this will be fast as no data upload is needed.
+                </p>
+                <p>
+                    In case you run into issues with large XML files on your browser, consider <a class="appstore-link" href="https://apps.apple.com/us/app/molicula/id1535380115?itsct=apps_box&amp;itscg=30200">using the app</a>.
+                </p>
+            </div>
+            <h3 class="question">How to open my converted csv in Microsoft Excel?</h3>
+            <div class="answer">
+                <p>
+                    Most systems will open csv files directly in Excel. If this does not work, the easiest way is to open Excel and then use the file open dialog to manually select the csv file. Note that the CSV separator is automatically detected by Excel. Other spreadsheet
+                    programs might not work out of the box. I am using the semicolon as a separator to avoid problems with numbers using comma notation. Please refer to your programs documentation to find out how to change the csv separator.
+                </p>
+            </div>
+        </div>
+        <div id="technical-details">
+            <a class="asterik" name="details">*</a>I am using the <a href="">FileReader API</a> to read the contents of a local file. The XML file is then parsed and converted to CSV files in memory. Finally the CSV is downloaded using the download attribute
+            of your browser</a>.
+        </div>
     </div>
-    <input type="file" id="input" accept=".xml" style="display:none">
-    <a id="jump" href="#results-table" style="">Jump to results ▼</a>
-    <div id="disclaimer">All work is done locally by your browser. Nothing is uploaded to my server.<a class="asterik" href="#details">*</a></div>
-    <div id="contact">Feel free to <a href="https://mailhide.io/e/bLVMN" onclick="mailhidepopup=window.open('https://mailhide.io/e/bLVMN','mailhidepopup','width=580,height=635'); return false;">contact me</a> if you have any questions!
-    <div id="debug">
-      <div>If you running into issues please <a id="showdebug" href="#">click here</a> after running the converter.</div>
-      <div id="debuglog" style="display: none">
-        <textarea id="logtext"></textarea>
-        <div>Please copy and paste these log messages and attach them when contacting me. I have taking great care - even impacting the usefulness - to avoid sending any personal data. However, additionally please verify manually that you are okay with sending this data.</div>
-      </div>
-    </div>
-    </div>
-    <div class="faq">
-      <h2>iPhone App</h2>
-      <p>
-        Handling (very) large XML files can be cumbersome. For this reason I created a very simple app to export your health data into CSV.
-      </p>
-      <p>
-        It is also completely <strong>free</strong> and has the same focus on <strong>privacy</strong>.
-      </p>
-      <a class="appstore-link" href="https://apps.apple.com/us/app/molicula/id1535380115?itsct=apps_box&amp;itscg=30200" style="margin-top: -1em; display: inline-block; overflow: hidden; border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/en-US?size=250x83&amp;releaseDate=1380153600&h=ac9a43f7663a7a0efbfcb39120889615" alt="Download on the App Store" style="border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; width: 250px; height: 83px;"></a>
-    </div>
-    <div id="coffee">
-      <style>.bmc-button img{height: 34px !important;width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 10px 7px 10px !important;line-height: 35px !important;height:51px !important;min-width:217px !important;text-decoration: none !important;display:inline-flex !important;color:#ffffff !important;background-color:#FF5F5F !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 10px 7px 10px !important;font-size: 22px !important;letter-spacing: 0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#ffffff !important;}</style><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/ericwolter"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:15px;font-size:28px !important;">Buy me a coffee</span></a>
-    </div>
-    <table id="results-table">
-      <tbody>
-      </tbody>
-    </table>
-    <div class="faq">
-      <h2>Frequently Asked Questions</h2>
-      <h3 class="question">How do I export my apple health data?</h3>
-      <div class="answer">
-        <p>
-          The Apple's documentation about <a href="https://support.apple.com/guide/iphone/share-health-and-fitness-data-iph27f6325b2/ios">exporting and sharing your health data</a> is very short. 
-          Sometimes these actions are not obvious. A more useful description is the <a href="https://osxdaily.com/2019/05/20/export-health-data-from-iphone/">step-by-step guide</a> compiled by OSXDaily.
-        </p>
-      </div>
-      <h3 class="question">How do I get the export.xml from my apple health data?</h3>
-      <div class="answer">
-        <p>
-          Please extract the "export.zip" you exported from the Health app. Inside you find the "export.xml" file. 
-          Use this XML file for the Apple Health Converter on this page. 
-          Note that the XML file can be very large (e.g. > 100MB). 
-          But, as the conversion is performed locally in your browser this will be fast as no data upload is needed.          
-        </p>
-        <p>
-          In case you run into issues with large XML files on your browser, consider <a class="appstore-link" href="https://apps.apple.com/us/app/molicula/id1535380115?itsct=apps_box&amp;itscg=30200">using the app</a>.
-        </p>
-      </div>
-      <h3 class="question">How to open my converted csv in Microsoft Excel?</h3>
-      <div class="answer">
-        <p>
-          Most systems will open csv files directly in Excel. 
-          If this does not work, the easiest way is to open Excel and then use the file open dialog to manually select the csv file.
-          Note that the CSV separator is automatically detected by Excel. 
-          Other spreadsheet programs might not work out of the box.
-          I am using the semicolon as a separator to avoid problems with numbers using comma notation. 
-          Please refer to your programs documentation to find out how to change the csv separator.
-        </p>
-      </div>
-    </div>
-    <div id="technical-details">
-      <a class="asterik" name="details">*</a>I am using the <a href="">FileReader API</a> to read the contents of a local file. The XML file is then parsed and converted to CSV files in memory. Finally the CSV is downloaded using the download attribute of your browser</a>.
-    </div>
-  </div>
-  <footer>
-    <a href="https://www.ericwolter.com/impressum/">Impressum &amp; Datenschutz</a>
-  </footer>
-  <script src="main.js"></script>
+    <footer>
+        <a href="https://www.ericwolter.com/impressum/">Impressum &amp; Datenschutz</a>
+    </footer>
+    <script src="main.js"></script>
 </body>
+
 </html>
