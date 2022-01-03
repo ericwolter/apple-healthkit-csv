@@ -1,27 +1,26 @@
 {
-  "name": "apple-healthkit-csv",
-  "version": "1.0.0",
-  "description": "",
-  "private": "true",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ericwolter/apple-healthkit-csv.git"
-  },
-  "author": "Eric Wolter",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/ericwolter/apple-healthkit-csv/issues"
-  },
-  "homepage": "https://github.com/ericwolter/apple-healthkit-csv#readme",
-  "dependencies": {
-    "normalize.css": "^8.0.1",
-    "xlsx": "^0.15.6"
-  },
-  "devDependencies": {
-    "html-inline": "git+https://github.com/alessioalex/html-inline.git",
-    "html-minifier": "^4.0.0"
-  }
+    "name": "apple-healthkit-csv",
+    "version": "1.0.0",
+    "description": "",
+    "private": "true",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ericwolter/apple-healthkit-csv.git"
+    },
+    "author": "Eric Wolter",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/ericwolter/apple-healthkit-csv/issues"
+    },
+    "homepage": "https://github.com/ericwolter/apple-healthkit-csv#readme",
+    "dependencies": {
+        "normalize.css": "^8.0.1"
+    },
+    "devDependencies": {
+        "html-inline": "git+https://github.com/alessioalex/html-inline.git",
+        "html-minifier": "^4.0.0"
+    }
 }

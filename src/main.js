@@ -4,9 +4,10 @@
 const NEWLINE = '\n';
 let CSV_SEPARATOR = ',';
 const dropzone = document.getElementById('dropzone');
+const progressOverlay = document.getElementById('progress-overlay');
 const input = document.getElementById('input');
+const section = document.getElementById('results');
 const table = document.getElementById('results-table');
-const jump = document.getElementById('jump');
 const logDiv = document.getElementById('debuglog');
 const logArea = document.getElementById('logtext');
 const parser = new DOMParser();
@@ -32,9 +33,19 @@ function logDebug(message) {
     console.debug(message);
 }
 
+function createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+    return div.firstChild;
+}
+
 document.getElementById('showdebug').addEventListener('click', function(e) {
     e.preventDefault();
-    logDiv.style.display = "block";
+    if (logDiv.style.display === 'none') {
+        logDiv.style.display = 'block';
+    } else {
+        logDiv.style.display = 'none';
+    }
 }, false);
 
 
@@ -46,15 +57,30 @@ function setProgress(stage, percent) {
     percentage = Math.round(percentage);
 
     if (stage === STAGE_READING) {
-        dropzone.textContent = 'Running in circles... (' + percentage + '%)';
+        progressOverlay.style.display = 'flex';
+        progressOverlay.style.backgroundColor = 'var(--progress-background-color)';
+        progressOverlay.textContent = 'Running in circles... (' + percentage + '%)';
+        section.style.display = 'none';
     } else if (stage === STAGE_AGGREGATING) {
-        dropzone.textContent = 'Riding uphill... (' + percentage + '%)';
+        progressOverlay.style.display = 'flex';
+        progressOverlay.style.backgroundColor = 'var(--progress-background-color)';
+        progressOverlay.textContent = 'Riding uphill... (' + percentage + '%)';
+        section.style.display = 'none';
     } else if (stage === STAGE_GENERATING) {
-        dropzone.textContent = 'Lifting weights... (' + percentage + '%)';
+        progressOverlay.style.display = 'flex';
+        progressOverlay.style.backgroundColor = 'var(--progress-background-color)';
+        progressOverlay.textContent = 'Lifting weights... (' + percentage + '%)';
+        section.style.display = 'none';
     } else if (stage === STAGE_FINISHED) {
-        dropzone.textContent = 'Exhausted, catching a breath! (100%)';
+        progressOverlay.style.display = 'flex';
+        progressOverlay.style.backgroundColor = 'var(--transparent)';
+        progressOverlay.textContent = 'Exhausted, catching a breath! (100%)';
+        section.style.display = "block";
     } else {
-        dropzone.textContent = 'Ready to go! Please select your export.xml';
+        progressOverlay.style.display = 'none';
+        progressOverlay.style.backgroundColor = 'var(--progress-background-color)';
+        progressOverlay.textContent = 'Ready to go! Please select your export.xml';
+        section.style.display = 'none';
     }
 }
 
@@ -146,6 +172,7 @@ function generateCSV(sheets, numRecords) {
         table_col, // the td
         download_col, // the table column containing the download link
         download_link, // the a
+        download_icon, // the i
         /* Iterators */
         t, // the type iterator
         r, // the row iterator
@@ -195,7 +222,9 @@ function generateCSV(sheets, numRecords) {
 
         download_col = document.createElement('td');
         download_link = document.createElement('a');
-        download_link.className += 'icon-download';
+        download_link.classList.add('download-link');
+        download_icon = createElementFromHTML('<svg class="download-icon" enable-background="new 0 0 24 24" fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" fill="none"/><path d="M16.59,9H15V4c0-0.55-0.45-1-1-1h-4C9.45,3,9,3.45,9,4v5H7.41c-0.89,0-1.34,1.08-0.71,1.71l4.59,4.59 c0.39,0.39,1.02,0.39,1.41,0l4.59-4.59C17.92,10.08,17.48,9,16.59,9z M5,19c0,0.55,0.45,1,1,1h12c0.55,0,1-0.45,1-1s-0.45-1-1-1H6 C5.45,18,5,18.45,5,19z"/></svg>');
+        download_link.appendChild(download_icon);
         download_link.href = window.URL.createObjectURL(blob);
         download_link.setAttribute('download', 'fileName');
         download_link.download = type + '.csv'
@@ -207,7 +236,6 @@ function generateCSV(sheets, numRecords) {
     }, function() {
         logInfo('[STAGE_FINISHED] ' + (new Date()).toUTCString());
         setProgress(STAGE_FINISHED, 1);
-        jump.style.display = "block";
     });
 }
 
