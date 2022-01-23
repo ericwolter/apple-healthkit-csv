@@ -7,6 +7,7 @@ const dropzone = document.getElementById('dropzone');
 const progressOverlay = document.getElementById('progress-overlay');
 const input = document.getElementById('input');
 const section = document.getElementById('results');
+const anchor = document.getElementById('results-anchor');
 const table = document.getElementById('results-table');
 const logDiv = document.getElementById('debuglog');
 const logArea = document.getElementById('logtext');
@@ -236,6 +237,9 @@ function generateCSV(sheets, numRecords) {
     }, function() {
         logInfo('[STAGE_FINISHED] ' + (new Date()).toUTCString());
         setProgress(STAGE_FINISHED, 1);
+        anchor.scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 }
 
